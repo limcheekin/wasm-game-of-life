@@ -1,0 +1,11 @@
+/target
+**/*.rs.bk
+Cargo.lock
+bin/
+pkg/
+wasm-pack.log
+
+# .gitignore of www directory
+**/node_modules
+**/dist
+
