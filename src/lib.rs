@@ -2,6 +2,14 @@ mod utils;
 
 use wasm_bindgen::prelude::*;
 extern crate js_sys;
+extern crate web_sys;
+
+// A macro to provide `println!(..)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -81,7 +89,7 @@ impl Universe {
                 };
 
                 log!("    it becomes {:?}", next_cell);
-                
+
                 next[idx] = next_cell;
             }
         }
@@ -179,14 +187,6 @@ impl Universe {
 
 }
 
-extern crate web_sys;
-
-// A macro to provide `println!(..)`-style syntax for `console.log` logging.
-macro_rules! log {
-    ( $( $t:tt )* ) => {
-        web_sys::console::log_1(&format!( $( $t )* ).into());
-    }
-}
 
 
 
