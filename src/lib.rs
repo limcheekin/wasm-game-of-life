@@ -35,6 +35,11 @@ pub struct Universe {
 /// Public methods, exported to JavaScript.
 #[wasm_bindgen]
 impl Universe {
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells[idx].toggle();
+    }
+    
     fn get_index(&self, row: u32, column: u32) -> usize {
         (row * self.width + column) as usize
     }
@@ -185,6 +190,15 @@ impl Universe {
         }
     }
 
+}
+
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
+        };
+    }
 }
 
 
