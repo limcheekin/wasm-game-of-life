@@ -3,6 +3,7 @@ mod utils;
 use wasm_bindgen::prelude::*;
 extern crate js_sys;
 extern crate web_sys;
+use js_sys::WebAssembly;
 
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
 macro_rules! log {
@@ -16,6 +17,15 @@ macro_rules! log {
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+// REF: Fixed the `memory` is missing in import { memory } from "wasm-game-of-life/wasm_game_of_life_bg"; 
+// https://sl.bing.net/djxc0D7pXR6
+#[wasm_bindgen]
+pub fn get_memory_buffer() -> JsValue {
+    let memory = wasm_bindgen::memory();
+    let memory: WebAssembly::Memory = memory.unchecked_into();
+    memory.buffer()
+}
 
 #[wasm_bindgen]
 #[repr(u8)]
